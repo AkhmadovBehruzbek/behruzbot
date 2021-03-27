@@ -1,4 +1,5 @@
 <?php 
+echo "Hello world";
     define('API_KEY', '1712032695:AAH81uQUOCsAf3umM_IzjGtUYF5jBa_N8mw');
 
     function bot ($method, $datas=[]) {
