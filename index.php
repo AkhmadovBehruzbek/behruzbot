@@ -23,7 +23,7 @@
     $update = json_decode(file_get_contents('php://input'));
 
     // log file 
-    //file_put_contents("log.txt", file_get_contents('php://input'));
+    file_put_contents("log.txt", file_get_contents('php://input'));
 
     // variables
     $message = $update->message;
@@ -50,8 +50,8 @@
                 'text' => $reply,
                 'parse_mode' => "HTML",
             ]);
-            
-            file_put_contents($fileUsers, "test");
+
+            file_put_contents($fileUsers, $chat_id);
 
             // sendMessage Admin
             $reply = "Yangi mijoz:\n".$full_name."\n👉 👉 <a href='tg://user?id=".$from_id."'>".$from_id. "</a>\n".date('Y-m-d H:i:s')."";
@@ -78,7 +78,7 @@
         if (isset($reply_to_message)) {
             bot ('sendMessage', [
                 'chat_id' => $reply_chat_id,
-                'text' => "<i>".$reply_text."</i>",
+                'text' => $reply_text,
                 'parse_mode' => "HTML",
             ]);
         }
