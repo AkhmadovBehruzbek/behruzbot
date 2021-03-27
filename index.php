@@ -2,7 +2,7 @@
     date_default_timezone_set('Asia/Tashkent');
     define('API_KEY', '1640307159:AAGVcT5S69YSZNPi2C476y0ISSRm93eCPvk');
 
-    $Manager = "1322664602";
+    $admin = "1322664602";
     $company = "@magical_codes";
     // bot function
     function bot ($method, $datas = []) {
@@ -40,7 +40,7 @@
     $reply_text = $message->text;
 
     // Klient 
-    if ($chat_id !== $Manager) {
+    if ($chat_id != $admin) {
         if ($text == "/start") {
             $reply = "Assalomu alaykum aa";
 
@@ -50,7 +50,7 @@
                 'parse_mode' => "HTML",
             ]);
         }
-    } else if ($text == $Manager) {
+    } else if ($text == $admin) {
         if ($text == "/start") {
             bot('sendMessage',[
                 'chat_id' => $admin,
