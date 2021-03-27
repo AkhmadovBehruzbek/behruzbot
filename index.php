@@ -42,20 +42,48 @@
     // Klient 
     if ($chat_id != $admin) {
         if ($text == "/start") {
-            $reply = "Assalomu alaykum aa";
+            $reply = "Assalomu alaykum <b>".$full_name."</b>, ".$company. "rasmiy botiga sush kelibsiz!\nSavollaringizni yuborishingiz mumkin👇";
 
             bot('sendMessage', [
                 'chat_id' => $chat_id,
                 'text' => $reply,
                 'parse_mode' => "HTML",
             ]);
-        }
-    } else if ($text == $admin) {
-        if ($text == "/start") {
-            bot('sendMessage',[
-                'chat_id' => $chat_id,
-                'text' => "salom admin",
+
+            // sendMessage Admin
+            $reply = "Yangi mijoz:\n".$full_name."\n👉 👉 <a href='tg://user?id=".$from_id."'>".$from_id. "</a>\n".date('Y-m-d H:i:s')."";
+
+            bot ('sendMessage', [
+                'chat_id' => $admin,
+                'text' => $reply,
                 'parse_mode' => "HTML",
+            ]);
+
+            bot ('forwardMessage', [
+                'chat_id' => $admin,
+                'from_chat_id' => $chat_id,
+                'message_id' => $message_id,
+            ]);
+        } else if ($text != "/start") {
+            bot('forwardMessage', [
+                'chat_id' => $admin,
+                'from_chat_id' => $chat_id,
+                'message_id' => $message_id,
+            ]);
+        } 
+    }  else if ($chat_id == $admin) {
+        if (isset($reply_to_message)) {
+            bot ('sendMessage', [
+                'chat_id' => $reply_chat_id,
+                'text' => $reply_text,
+                'parse_mode' => "HTML",
+            ]);
+        }
+
+        if ($text == "hi" or $text == "/start") {
+            bot('sendMessage', [
+                'chat_id' => $admin,
+                'text' => "Salom Admin",
             ]);
         }
     }
