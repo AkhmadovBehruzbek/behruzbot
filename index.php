@@ -1,7 +1,7 @@
 <?php
     define('API_KEY','1640307159:AAGVcT5S69YSZNPi2C476y0ISSRm93eCPvk');
 
-    $admin = "-1322664602"; // admin idsi
+    $admin = "1322664602"; // admin idsi
     $adminuser = "mr_Akhmadov"; // admin user
 
     function del($nomi){
