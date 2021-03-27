@@ -1,93 +1,43 @@
 <?php 
-    date_default_timezone_set('Asia/Tashkent');
-    define('API_KEY', '1640307159:AAGVcT5S69YSZNPi2C476y0ISSRm93eCPvk');
+    define('API_KEY', '1712032695:AAH81uQUOCsAf3umM_IzjGtUYF5jBa_N8mw');
 
-    $admin = "1322664602";
-    $company = "@magical_codes";
-    $fileUsers = "users.txt";
-    // bot function
-    function bot ($method, $datas = []) {
+    function bot ($method, $datas=[]) {
         $url = "https://api.telegram.org/bot".API_KEY."/".$method;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $datas);
         $res = curl_exec($ch);
-        if (!curl_error($ch)) return json_decode($res);
+        if (curl_error($ch)) {
+            var_dump(curl_error($ch));
+        } else {
+            return json_decode($res);
+        }
     }
-    // html function
-    function html($text) {
-        return str_replace(['<','>'],['&#60;','&#62;'], $text);
+
+    // typing... function
+    function typing ($ch) {
+        return bot('sendChatAction', [
+            'chat_id' => $ch,
+            'action' => 'typing',
+        ]);
     }
 
     $update = json_decode(file_get_contents('php://input'));
-
-    // log file 
-    file_put_contents("log.txt", file_get_contents('php://input'));
-
-    // variables
     $message = $update->message;
-    $text = html($message->text);
     $chat_id = $message->chat->id;
-    $from_id = $message->from->id;
-    $message_id = $message->message_id;
-    $first_name = $message->from->first_name;
-    $last_name = $message->from->last_name;
-    $full_name = html($first_name." ".$last_name);
+    $text = $message->text;
 
-    //replymessage
-    $reply_to_message = $message->reply_to_message;
-    $reply_chat_id = $message->reply_to_message->forward_from->id;
-    $reply_text = $message->text;
-
-    // Klient 
-    if ($chat_id != $admin) {
-        if ($text == "/start") {
-            $reply = "Assalomu alaykum <b>".$full_name."</b>, ".$company. " rasmiy botiga sush kelibsiz!\nSavollaringizni yuborishingiz mumkin👇";
-
-            bot('sendMessage', [
-                'chat_id' => $chat_id,
-                'text' => $reply,
-                'parse_mode' => "HTML",
-            ]);
-
-            file_put_contents($fileUsers, $chat_id);
-
-            // sendMessage Admin
-            $reply = "Yangi mijoz:\n".$full_name."\n👉 👉 <a href='tg://user?id=".$from_id."'>".$from_id. "</a>\n".date('Y-m-d H:i:s')."";
-
-            bot ('sendMessage', [
-                'chat_id' => $admin,
-                'text' => $reply,
-                'parse_mode' => "HTML",
-            ]);
-
-            bot ('forwardMessage', [
-                'chat_id' => $admin,
-                'from_chat_id' => $chat_id,
-                'message_id' => $message_id,
-            ]);
-        } else if ($text != "/start") {
-            bot('forwardMessage', [
-                'chat_id' => $admin,
-                'from_chat_id' => $chat_id,
-                'message_id' => $message_id,
-            ]);
-        } 
-    }  else if ($chat_id == $admin) {
-        if (isset($reply_to_message)) {
-            bot ('sendMessage', [
-                'chat_id' => $reply_chat_id,
-                'text' => $reply_text,
-                'parse_mode' => "HTML",
-            ]);
-        }
-
-        if ($text == "hi" or $text == "/start") {
-            bot('sendMessage', [
-                'chat_id' => $admin,
-                'text' => "Salom Admin",
-            ]);
-        }
+    if (isset($text)) {
+        typing($chat_id);
     }
+
+    if ($text == "/start") {
+        bot('sendMessage', [
+            'chat_id' => $chat_id,
+            'text' => "Assalomu alaykum",
+            'parse_mode' => 'markdown',
+        ]);
+    }
+
 ?>
