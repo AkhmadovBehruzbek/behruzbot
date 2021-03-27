@@ -1,5 +1,4 @@
 <?php 
-echo "hello world";
     define('API_KEY', '1640307159:AAGVcT5S69YSZNPi2C476y0ISSRm93eCPvk');
     $Manager = "1322664602";
     
@@ -22,12 +21,34 @@ echo "hello world";
     $update = json_decode(file_get_contents('php://input'));
 
     // testlog
-    file_put_contents("log.txt", file_get_contents('php://input'));
+    //file_put_contents("log.txt", file_get_contents('php://input'));
 
-    $myfile = fopen("log.txt", "r") or die("Unable to open file!");
-    echo fread($myfile,filesize("log.txt"));
-    fclose($myfile);
-    
+    // message variables
+    $message = $update->message;
+    $text = html($message->text);
+    $chat_id = $message->chat->id;
+    $from_id = $message->from->id;
+    $message_id = $message->message_id;
+    $first_name = $message->from->first_name;
+    $last_name = $message->from->last_name;
+    $full_name = html($first_name." ".$last_name);
+
+    // reply message
+    $reply_to_message = $message->reply_to_message;
+    $reply_chat_id = $message->reply_to_message->forward_from->id;
+    $reply_text = $message->text;
+
+    if ($chat_id != $Manager) {
+        if ($text == "/start") {
+            $reply = "Assalomu alaykum <b>".$full_name."</b>, Botga xush kelibsiz!  \n Murojaat yo'llash mumkin👇";
+            
+            bot ('sendMessage', [
+                'chat_id' => $chat_id,
+                'text' => $reply,
+                'parse_mode' => "HTML",
+            ]);
+        }
+    }
 
 
 ?>
