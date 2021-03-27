@@ -75,7 +75,7 @@
         if (isset($reply_to_message)) {
             bot ('sendMessage', [
                 'chat_id' => $reply_chat_id,
-                'text' => $reply_text,
+                'text' => "<i>".$reply_text."</i>",
                 'parse_mode' => "HTML",
             ]);
         }
