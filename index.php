@@ -50,5 +50,13 @@
                 'parse_mode' => "HTML",
             ]);
         }
+    } else if ($text == $admin) {
+        if ($text == "/start") {
+            bot('sendMessage',[
+                'chat_id' => $admin,
+                'text' => "salom admin",
+                'parse_mode' => "HTML",
+            ]);
+        }
     }
 ?>
