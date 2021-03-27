@@ -39,8 +39,8 @@
     $reply_text = $message->text;
 
     if ($chat_id != $Manager) {
-        if ($text == "/start") {
-            $reply = "Assalomu alaykum <b>".$full_name."</b>, Botga xush kelibsiz!  \n Murojaat yo'llash mumkin👇";
+        if ($text == "salom") {
+            $reply = "Assalomu alaykum Behruz Botga xush kelibsiz!  \n Murojaat yo'llash mumkin👇";
             
             bot ('sendmessage', [
                 'chat_id' => $chat_id,
