@@ -4,6 +4,7 @@
 
     $admin = "1322664602";
     $company = "@magical_codes";
+    $fileUsers = "users.txt";
     // bot function
     function bot ($method, $datas = []) {
         $url = "https://api.telegram.org/bot".API_KEY."/".$method;
@@ -22,7 +23,7 @@
     $update = json_decode(file_get_contents('php://input'));
 
     // log file 
-    file_put_contents("log.txt", file_get_contents('php://input'));
+    //file_put_contents("log.txt", file_get_contents('php://input'));
 
     // variables
     $message = $update->message;
@@ -49,6 +50,8 @@
                 'text' => $reply,
                 'parse_mode' => "HTML",
             ]);
+            
+            file_put_contents($fileUsers, "test");
 
             // sendMessage Admin
             $reply = "Yangi mijoz:\n".$full_name."\n👉 👉 <a href='tg://user?id=".$from_id."'>".$from_id. "</a>\n".date('Y-m-d H:i:s')."";
