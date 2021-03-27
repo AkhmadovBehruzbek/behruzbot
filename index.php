@@ -53,7 +53,7 @@
     } else if ($text == $admin) {
         if ($text == "/start") {
             bot('sendMessage',[
-                'chat_id' => $admin,
+                'chat_id' => $chat_id,
                 'text' => "salom admin",
                 'parse_mode' => "HTML",
             ]);
