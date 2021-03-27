@@ -28,6 +28,13 @@
     $chat_id = $message->chat->id;
     $text = $message->text;
 
+    $button = json_encode([
+        'resize_keyboard' => true,
+        'keyboard' => [
+            [['text' => "Biz haqimizda"], ["text" => "Manzil"],],
+        ]
+    ]);
+
     if (isset($text)) {
         typing($chat_id);
     }
@@ -37,6 +44,7 @@
             'chat_id' => $chat_id,
             'text' => "Assalomu alaykum",
             'parse_mode' => 'markdown',
+            'reply_markup' => $button,
         ]);
     }
 
