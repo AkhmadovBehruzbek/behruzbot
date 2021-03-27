@@ -1,31 +1,54 @@
 <?php 
-	$botToken = "1640307159:AAGVcT5S69YSZNPi2C476y0ISSRm93eCPvk";
-	$website = "https://api.telegram.org/bot".$botToken;
+    date_default_timezone_set('Asia/Tashkent');
+    define('API_KEY', '1640307159:AAGVcT5S69YSZNPi2C476y0ISSRm93eCPvk');
 
-	function curl_get_contents($url) {
-		$ch = curl_init();
+    $admin = "1322664602";
+    $company = "@magical_codes";
+    // bot function
+    function bot ($method, $datas = []) {
+        $url = "https://api.telegram.org/bot".API_KEY."/".$method;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $datas);
+        $res = curl_exec($ch);
+        if (!curl_error($ch)) return json_decode($res);
+    }
+    // html function
+    function html($text) {
+        return str_replace(['<','>'],['&#60;','&#62;'], $text);
+    }
 
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_URL, $url);
+    $update = json_decode(file_get_contents('php://input'));
 
-		$data = curl_exec($ch);
-		curl_close($ch);
+    // log file 
+    file_put_contents("log.txt", file_get_contents('php://input'));
 
-		return $data;
-	}
+    // variables
+    $message = $update->message;
+    $text = html($message->text);
+    $chat_id = $message->chat->id;
+    $from_id = $message->from->id;
+    $message_id = $message->message_id;
+    $first_name = $message->from->first_name;
+    $last_name = $message->from->last_name;
+    $full_name = html($first_name." ".$last_name);
 
-	$update = curl_get_contents($website."php://input");
+    //replymessage
+    $reply_to_message = $message->reply_to_message;
+    $reply_chat_id = $message->reply_to_message->forward_from->id;
+    $reply_text = $message->text;
 
-    $updateArray = json_decode($update, TRUE);
+    // Klient 
+    if ($chat_id !== $admin) {
+        if ($text == "/start") {
+            $reply = "Assalomu alaykum";
 
-    $chat_id = $updateArray["result"][0]["message"]["chat"]["id"];
-
-    $first_name = $updateArray["result"]["0"]["message"]["from"]["first_name"];
-
-    curl_get_contents($website."/sendMessage?chat_id=".$chat_id."&text=Assalomu alaykum, ".$first_name);
-    
-    echo $first_name;
-    
-    print_r($chat_id);
-    ?>
+            bot('sendMessage', [
+                'chat_id' => $chat_id,
+                'text' => $reply,
+                'parse_mode' => "HTML",
+            ]);
+        }
+    }
+?>
