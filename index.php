@@ -42,7 +42,7 @@
     // Klient 
     if ($chat_id != $admin) {
         if ($text == "/start") {
-            $reply = "Assalomu alaykum <b>".$full_name."</b>, ".$company. "rasmiy botiga sush kelibsiz!\nSavollaringizni yuborishingiz mumkin👇";
+            $reply = "Assalomu alaykum <b>".$full_name."</b>, ".$company. " rasmiy botiga sush kelibsiz!\nSavollaringizni yuborishingiz mumkin👇";
 
             bot('sendMessage', [
                 'chat_id' => $chat_id,
