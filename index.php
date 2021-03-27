@@ -24,6 +24,9 @@ echo "hello world";
     // testlog
     file_put_contents("log.txt", file_get_contents('php://input'));
 
+    $myfile = fopen("log.txt", "r") or die("Unable to open file!");
+    echo fread($myfile,filesize("log.txt"));
+    fclose($myfile);
     
 
 
