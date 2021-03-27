@@ -42,7 +42,7 @@
         if ($text == "/start") {
             $reply = "Assalomu alaykum <b>".$full_name."</b>, Botga xush kelibsiz!  \n Murojaat yo'llash mumkin👇";
             
-            bot ('sendMessage', [
+            bot ('sendmessage', [
                 'chat_id' => $chat_id,
                 'text' => $reply,
                 'parse_mode' => "HTML",
