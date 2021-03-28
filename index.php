@@ -35,6 +35,13 @@
         ]
     ]);
 
+    $cancel = json_encode([
+        'resize_keyboard' => true,
+        'keyboard' => [
+            [['text' => 'Ortga'],],
+        ]
+    ]);
+
     if (isset($text)) {
         typing($chat_id);
     }
@@ -43,6 +50,24 @@
         bot('sendMessage', [
             'chat_id' => $chat_id,
             'text' => "Assalomu alaykum",
+            'parse_mode' => 'markdown',
+            'reply_markup' => $button,
+        ]);
+    }
+
+    if ($text == "Biz haqimizda") {
+        bot('sendMessage', [
+            'chat_id' => $chat_id,
+            'text' => "Biz haqimizda bo'limi",
+            'parse_mode' => "markdown",
+            "reply_markup" => $cancel,
+        ]);
+    }
+
+    if ($text == "Ortga") {
+        bot('sendMessage', [
+            'chat_id' => $chat_id,
+            'text' => "Sizga qanday yordam bera olishim mumkin",
             'parse_mode' => 'markdown',
             'reply_markup' => $button,
         ]);
