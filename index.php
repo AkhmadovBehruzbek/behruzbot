@@ -73,4 +73,13 @@
         ]);
     }
 
+    if ($text == "Manzil") {
+        bot('sendLocation', [
+            'chat_id' => $chat_id,
+            'latitude' => 41.341123,
+            'longtitude' => 69.287298,
+            'reply_markup' => $button,
+        ]);
+    }
+
 ?>
